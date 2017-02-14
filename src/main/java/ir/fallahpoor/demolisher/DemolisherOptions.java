@@ -1,0 +1,43 @@
+package ir.fallahpoor.demolisher;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+
+/**
+ * @author Masood Fallahpoor
+ */
+public class DemolisherOptions {
+
+    public static final int NUM_MANDATORY_ARGUMENTS = 2;
+    public static final String PROGRAM_NAME = "demolisher";
+    public static final String USAGE_MESSAGE = PROGRAM_NAME + " [OPTION]... DIRECTORY FILE-NAME...";
+    public static final String VERSION_MESSAGE = PROGRAM_NAME + " version 0.1\n" +
+            "Copyright (C) 2017 Masood Fallahpoor.\n" +
+            "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n" +
+            "This is free software: you are free to change and redistribute it.\n" +
+            "There is NO WARRANTY, to the extent permitted by law.\n" +
+            "\n" +
+            "Written by Masood Fallahpoor.\n";
+    public static final String OPTION_VERSION = "version";
+    public static final String OPTION_VERBOSE_SHORT = "v";
+    public static final String OPTION_VERBOSE_LONG = "verbose";
+
+    public static Options getOptions() {
+
+        Options options = new Options();
+
+        // Add an option for displaying version information
+        Option versionOption = new Option(null, OPTION_VERSION, false,
+                "output version information and exit.");
+        options.addOption(versionOption);
+
+        // Add an option for being more verbose
+        Option verboseOption = new Option(OPTION_VERBOSE_SHORT, OPTION_VERBOSE_LONG, false,
+                "explain what is being done.");
+        options.addOption(verboseOption);
+
+        return options;
+
+    }
+
+}

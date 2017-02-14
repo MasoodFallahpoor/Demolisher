@@ -1,32 +1,49 @@
 package ir.fallahpoor.demolisher;
 
+import org.apache.commons.cli.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Masood Fallahpoor
  */
 public class Runner {
 
-    private static final int NUM_MANDATORY_ARGUMENTS = 2;
-
     public static void main(String[] args) {
 
-        if (args.length < NUM_MANDATORY_ARGUMENTS) {
-            // Wrong number of arguments. Display the usage of program
-            System.out.println("Wrong number of arguments.\n" +
-                    "Usage: demolisher PATH-TO-DIRECTORY FILE-NAME-1 [FILE-NAME-2 FILE-NAME-3 ...]");
-        } else {
+        CommandLine commandLine = null;
+        Options options = DemolisherOptions.getOptions();
+        HelpFormatter formatter = new HelpFormatter();
 
-            String directoryPath = args[0];
-            ArrayList<String> fileNames = new ArrayList<>();
-            fileNames.addAll(Arrays.asList(args).subList(1, args.length));
+        try {
+            commandLine = new DefaultParser().parse(options, args);
 
-            Demolisher demolisher = new Demolisher(directoryPath, fileNames);
-            demolisher.demolish();
+            if (commandLine.hasOption(DemolisherOptions.OPTION_VERSION)) {
+                System.out.println(DemolisherOptions.VERSION_MESSAGE);
+                System.exit(0);
+            }
 
+        } catch (ParseException e) {
+            formatter.printHelp(DemolisherOptions.USAGE_MESSAGE, options);
+            System.exit(1);
         }
 
-    }
+        List<String> argumentsList = commandLine.getArgList();
 
-}
+        if (argumentsList.size() < DemolisherOptions.NUM_MANDATORY_ARGUMENTS) {
+            formatter.printHelp(DemolisherOptions.USAGE_MESSAGE, options);
+            System.exit(1);
+        } else {
+            String directoryPath = argumentsList.get(0);
+            ArrayList<String> fileNames = new ArrayList<>();
+            fileNames.addAll(commandLine.getArgList().subList(1, argumentsList.size()));
+
+            Demolisher demolisher = new Demolisher(directoryPath, fileNames, commandLine);
+            demolisher.demolish();
+        }
+
+    } // end of method main
+
+} //end of class Runner
