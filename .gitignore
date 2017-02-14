@@ -1,6 +1,7 @@
 # Built application files
 build/
 /*/build/
+out/
 
 # Gradle generated files
 .gradle/
