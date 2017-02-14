@@ -55,6 +55,10 @@ project
 
 Notes
 --------
+- The general form of running Demolisher is as follows:
+```
+java -jar demolisher [OPTION]... DIRECTORY FILE-NAME...
+```
 - You need JDK/JRE 8 to run Demolisher.
 - The path to *java* command should be in your PATH environment variable or you should provide the full path of java command in order to run Demolisher.
 - If the path of directory or file names contain space then they should be surrounded with either single or double quotes like: 
