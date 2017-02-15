@@ -20,11 +20,20 @@ public class Runner {
         Options options = DemolisherOptions.getOptions();
         HelpFormatter formatter = new HelpFormatter();
 
+        // Format options in the order they're added to options object
+        formatter.setOptionComparator(null);
+
         try {
             commandLine = new DefaultParser().parse(options, args);
 
             if (commandLine.hasOption(DemolisherOptions.OPTION_VERSION)) {
                 System.out.println(DemolisherOptions.VERSION_MESSAGE);
+                System.exit(0);
+            }
+
+            if (commandLine.hasOption(DemolisherOptions.OPTION_HELP_SHORT) ||
+                    commandLine.hasOption(DemolisherOptions.OPTION_HELP_LONG)) {
+                formatter.printHelp(DemolisherOptions.USAGE_MESSAGE, options);
                 System.exit(0);
             }
 
