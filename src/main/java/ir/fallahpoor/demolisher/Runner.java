@@ -27,6 +27,10 @@ public class Runner {
         try {
             commandLine = new DefaultParser().parse(options, args);
 
+            /*
+            TODO: if user enters both version and help options, no matter which one is input
+            first, version option always gets precedence. Devise a way to honor the order they are entered.
+             */
             if (commandLine.hasOption(DemolisherOptions.OPTION_VERSION)) {
                 System.out.println(DemolisherOptions.VERSION_MESSAGE);
                 System.exit(0);
