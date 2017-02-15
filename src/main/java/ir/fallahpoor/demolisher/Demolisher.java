@@ -45,14 +45,12 @@ public class Demolisher {
                         boolean result = deleteFile(filePath);
                         if (result) {
                             filesDeleted[0]++;
-                            if (commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_LONG) ||
-                                    commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_SHORT)) {
+                            if (commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_SHORT)) {
                                 System.out.println("File " + filePath.toFile().getAbsolutePath() + " deleted.");
                             }
                         } else {
                             errorsCount[0]++;
-                            if (commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_LONG) ||
-                                    commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_SHORT)) {
+                            if (commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_SHORT)) {
                                 System.out.println("Could NOT delete " + filePath.toFile().getAbsolutePath());
                             }
                         }

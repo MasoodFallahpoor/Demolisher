@@ -31,8 +31,7 @@ public class Runner {
                 System.exit(0);
             }
 
-            if (commandLine.hasOption(DemolisherOptions.OPTION_HELP_SHORT) ||
-                    commandLine.hasOption(DemolisherOptions.OPTION_HELP_LONG)) {
+            if (commandLine.hasOption(DemolisherOptions.OPTION_HELP_SHORT)) {
                 formatter.printHelp(DemolisherOptions.USAGE_MESSAGE, options);
                 System.exit(0);
             }
