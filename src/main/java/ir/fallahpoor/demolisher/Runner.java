@@ -5,6 +5,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.UnrecognizedOptionException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,13 @@ public class Runner {
             }
 
         } catch (ParseException e) {
-            formatter.printHelp(DemolisherOptions.USAGE_MESSAGE, options);
+            if (e instanceof UnrecognizedOptionException) {
+                System.out.println(DemolisherOptions.PROGRAM_NAME + ": unrecognized option\n" +
+                        "Try '" + DemolisherOptions.PROGRAM_NAME + " --" + DemolisherOptions.OPTION_HELP_LONG +
+                        "' for more information.");
+            } else {
+                formatter.printHelp(DemolisherOptions.USAGE_MESSAGE, options);
+            }
             System.exit(1);
         }
 
