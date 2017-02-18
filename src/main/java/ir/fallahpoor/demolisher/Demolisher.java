@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 /**
@@ -31,35 +32,39 @@ public class Demolisher {
             System.exit(1);
         }
 
-        final int[] filesDeleted = {0};
-        final int[] errorsCount = {0};
-
         // Traverse the file tree rooted at directoryPath and get all paths
         try (Stream<Path> paths = Files.walk(Paths.get(directoryPath))) {
+
+            TreeMap<Boolean, Integer> deletionResultMap = new TreeMap<>();
 
             // Get paths that point to a regular file and file name is one of the provided file names
             paths.filter(filePath -> Files.isRegularFile(filePath) &&
                     fileNames.contains(filePath.toFile().getName()))
                     // Now what we are left with are just those files to be deleted
                     .forEach(filePath -> {
-                        boolean result = deleteFile(filePath);
-                        if (result) {
-                            filesDeleted[0]++;
-                            if (commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_SHORT)) {
-                                System.out.println("File " + filePath.toFile().getAbsolutePath() + " deleted.");
-                            }
-                        } else {
-                            errorsCount[0]++;
-                            if (commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_SHORT)) {
+
+                        boolean isDeleted = deleteFile(filePath);
+
+                        // Record whether deletion was successful or not
+                        deletionResultMap.put(isDeleted, deletionResultMap.getOrDefault(isDeleted, 0) + 1);
+
+                        // Display a message if verbose option is present
+                        if (commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_SHORT)) {
+                            if (isDeleted) {
+                                System.out.println("File " + filePath.toFile().getAbsolutePath() + " deleted");
+                            } else {
                                 System.out.println("Could NOT delete " + filePath.toFile().getAbsolutePath());
                             }
                         }
+
                     });
 
-            System.out.println("\n" + filesDeleted[0] + " files deleted, " + errorsCount[0] + " errors occurred.");
+            // Display number of deleted files and errors
+            System.out.println("\n" + deletionResultMap.getOrDefault(true, 0) + " files deleted, " +
+                    deletionResultMap.getOrDefault(false, 0) + " errors occurred.");
 
         } catch (IOException e) {
-            System.err.println("ERROR: Could NOT get the list of files");
+            System.err.println(DemolisherOptions.PROGRAM_NAME + ": Could NOT get the list of files");
             System.exit(1);
         }
 
