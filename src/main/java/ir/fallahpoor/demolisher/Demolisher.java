@@ -64,7 +64,7 @@ public class Demolisher {
                     deletionResultMap.getOrDefault(false, 0) + " errors occurred.");
 
         } catch (IOException e) {
-            System.err.println(DemolisherOptions.PROGRAM_NAME + ": Could NOT get the list of files");
+            showError("Could NOT get the list of files");
             System.exit(1);
         }
 
@@ -76,13 +76,12 @@ public class Demolisher {
         boolean result = true;
 
         if (!dirPath.exists()) {
-            System.out.println(DemolisherOptions.PROGRAM_NAME + ": cannot access '" + dirPath.getAbsolutePath() +
-                    "': No such directory");
+            showError("directory '" + dirPath.getAbsolutePath() + "' does NOT exist");
             result = false;
         }
 
         if (dirPath.isFile()) {
-            System.out.println("No directory is specified");
+            showError("A file is specified, NOT a directory");
             result = false;
         }
 
@@ -99,6 +98,10 @@ public class Demolisher {
             return false;
         }
 
+    }
+
+    private void showError(String errorMessage) {
+        System.err.println(DemolisherOptions.PROGRAM_NAME + ": " + errorMessage);
     }
 
 }
