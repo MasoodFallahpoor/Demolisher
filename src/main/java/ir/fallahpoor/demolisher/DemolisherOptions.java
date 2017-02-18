@@ -10,13 +10,13 @@ public class DemolisherOptions {
 
     public static final int NUM_MANDATORY_ARGUMENTS = 2;
     public static final String PROGRAM_NAME = "demolisher";
+    public static final String PROGRAM_VERSION = "0.3";
     public static final String USAGE_MESSAGE = PROGRAM_NAME + " [OPTION]... DIRECTORY FILE-NAME...";
-    public static final String VERSION_MESSAGE = PROGRAM_NAME + " version 0.1\n" +
+    public static final String VERSION_MESSAGE = PROGRAM_NAME + " version " + PROGRAM_VERSION + "\n" +
             "Copyright (C) 2017 Masood Fallahpoor.\n" +
             "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n" +
             "This is free software: you are free to change and redistribute it.\n" +
-            "There is NO WARRANTY, to the extent permitted by law.\n" +
-            "\n" +
+            "There is NO WARRANTY, to the extent permitted by law.\n\n" +
             "Written by Masood Fallahpoor.\n";
     public static final String OPTION_VERBOSE_SHORT = "v";
     public static final String OPTION_VERBOSE_LONG = "verbose";
