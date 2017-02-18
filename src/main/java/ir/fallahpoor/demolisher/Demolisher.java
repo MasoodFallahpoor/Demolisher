@@ -2,7 +2,6 @@ package ir.fallahpoor.demolisher;
 
 import org.apache.commons.cli.CommandLine;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,13 +36,13 @@ public class Demolisher {
 
             TreeMap<Boolean, Integer> deletionResultMap = new TreeMap<>();
 
-            // Get paths that point to a regular file and file name is one of the provided file names
-            paths.filter(filePath -> Files.isRegularFile(filePath) &&
-                    fileNames.contains(filePath.toFile().getName()))
+            // Get paths that point to a regular file
+            paths.filter(filePath -> Files.isRegularFile(filePath))
+                    .filter(filePath -> FileUtils.isFileNameInGivenFileNames(filePath, fileNames))
                     // Now what we are left with are just those files to be deleted
                     .forEach(filePath -> {
 
-                        boolean isDeleted = deleteFile(filePath);
+                        boolean isDeleted = FileUtils.deleteFile(filePath);
 
                         // Record whether deletion was successful or not
                         deletionResultMap.put(isDeleted, deletionResultMap.getOrDefault(isDeleted, 0) + 1);
@@ -72,30 +71,20 @@ public class Demolisher {
 
     private boolean isDirectoryPathOk(String directoryPath) {
 
-        File dirPath = new File(directoryPath);
-        boolean result = true;
+        FileUtils.Result result = FileUtils.isDirectoryPathOk(directoryPath);
 
-        if (!dirPath.exists()) {
-            showError("directory '" + dirPath.getAbsolutePath() + "' does NOT exist");
-            result = false;
-        }
+        if (result == FileUtils.Result.OK) {
+            return true;
+        } else {
 
-        if (dirPath.isFile()) {
-            showError("A file is specified, NOT a directory");
-            result = false;
-        }
+            if (result == FileUtils.Result.DIR_DOES_NOT_EXIST) {
+                showError("directory '" + directoryPath + "' does NOT exist");
+            } else if (result == FileUtils.Result.NOT_A_DIRECTORY) {
+                showError("A file is specified, NOT a directory");
+            }
 
-        return result;
-
-    }
-
-
-    private boolean deleteFile(Path filePath) {
-
-        try {
-            return Files.deleteIfExists(filePath);
-        } catch (IOException e) {
             return false;
+
         }
 
     }
