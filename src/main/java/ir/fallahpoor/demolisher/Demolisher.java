@@ -37,7 +37,7 @@ public class Demolisher {
             TreeMap<Boolean, Integer> deletionResultMap = new TreeMap<>();
 
             // Get paths that point to a regular file
-            paths.filter(filePath -> Files.isRegularFile(filePath))
+            paths.filter(Files::isRegularFile)
                     .filter(filePath -> FileUtils.isFileNameInGivenFileNames(filePath, fileNames))
                     // Now what we are left with are just those files to be deleted
                     .forEach(filePath -> {
