@@ -59,8 +59,8 @@ public class Demolisher {
                     });
 
             // Display number of deleted files and errors
-            System.out.println("\n" + deletionResultMap.getOrDefault(true, 0) + " files deleted, " +
-                    deletionResultMap.getOrDefault(false, 0) + " errors occurred.");
+            System.out.println("\n" + deletionResultMap.getOrDefault(true, 0) + " files deleted\n" +
+                    deletionResultMap.getOrDefault(false, 0) + " errors occurred");
 
         } catch (IOException e) {
             showError("Could NOT get the list of files");
