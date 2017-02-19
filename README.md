@@ -1,6 +1,6 @@
 Demolisher
 =========
-Demolisher is a simple and tiny command-line Java program that receives a directory and a list of file names and deletes files with those file names from given directory and all its subdirectories, recursively.
+Demolisher is a tiny command-line Java program that receives a directory and a list of file names and recursively deletes files with given file names from given directory and all its subdirectories.
 
 Usage
 --------
@@ -12,24 +12,24 @@ project
 |   a.txt
 |   b.txt
 |
-+---folder1
++---dir1
 |   |   file011.txt
 |   |   file012.txt
 |   |   b.txt
 |   |
-|   +---subfolder1
+|   +---subdir1
 |       |   file111.txt
 |       |   file112.txt
 |       |   a.txt
 |       |   b.txt
 |   
-+---folder2
++---dir2
     |   file021.txt
     |   file022.txt
     |   a.txt
     |   b.txt
 ```
-In order to delete files with name *a.txt* or *b.txt* one could use Demolisher as follows:
+In order to delete files with name either *a.txt* or *b.txt* one could use Demolisher as follows:
 ```
 java -jar demolisher FULL_PATH_OF_project_DIRECTORY a.txt b.txt
 ```
@@ -40,15 +40,15 @@ project
 |   README.md
 |   file001.txt
 |
-+---folder1
++---dir1
 |   |   file011.txt
 |   |   file012.txt
 |   |
-|   +---subfolder1
+|   +---subdir1
 |       |   file111.txt
 |       |   file112.txt
 |   
-+---folder2
++---dir2
     |   file021.txt
     |   file022.txt
 ```
@@ -61,11 +61,11 @@ java -jar demolisher [OPTION]... DIRECTORY FILE-NAME...
 ```
 - You need JDK/JRE 8 to run Demolisher.
 - The path to *java* command should be in your PATH environment variable or you should provide the full path of java command in order to run Demolisher.
-- If the path of directory or file names contain space then they should be surrounded with either single or double quotes like: 
+- If the path of directory or file names contain space then they should be surrounded with double quotes like: 
 ```
 java -jar demolisher "C:\Program Files\project" "file 1.txt" "file 2.txt"
 ```
-- File names should be entered with their extensions, otherwise Demolisher will not delete them.
+- File names could be entered with or without extension. When file name has extension then only files with that exact name and extension are deleted. When no extension is entered then all files with specified name are deleted regardless of their extension.
 
 License
 --------
