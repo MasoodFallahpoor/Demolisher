@@ -38,6 +38,7 @@ public class Demolisher {
 
             // Get paths that point to a regular file
             paths.filter(Files::isRegularFile)
+                    // Get paths to files whose file name is in given list of file names
                     .filter(filePath -> FileUtils.isFileNameInGivenFileNames(filePath, fileNames))
                     // Now what we are left with are just those files to be deleted
                     .forEach(filePath -> {
