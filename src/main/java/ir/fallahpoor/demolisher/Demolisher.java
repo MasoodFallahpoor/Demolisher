@@ -1,5 +1,6 @@
 package ir.fallahpoor.demolisher;
 
+import ir.fallahpoor.demolisher.FileUtils.DeleteResult;
 import org.apache.commons.cli.CommandLine;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class Demolisher {
         // Traverse the file tree rooted at directoryPath and get all paths
         try (Stream<Path> paths = Files.walk(Paths.get(directoryPath))) {
 
-            TreeMap<Boolean, Integer> deletionResultMap = new TreeMap<>();
+            TreeMap<DeleteResult, Integer> deletionResultMap = new TreeMap<>();
 
             // Get paths that point to a regular file
             paths.filter(Files::isRegularFile)
@@ -43,25 +44,21 @@ public class Demolisher {
                     // Now what we are left with are just those files to be deleted
                     .forEach(filePath -> {
 
-                        boolean isDeleted = FileUtils.deleteFile(filePath);
+                        DeleteResult deleteResult = FileUtils.deleteFile(filePath,
+                                commandLine.hasOption(DemolisherOptions.OPTION_INTERACTIVE_SHORT));
 
                         // Record whether deletion was successful or not
-                        deletionResultMap.put(isDeleted, deletionResultMap.getOrDefault(isDeleted, 0) + 1);
+                        deletionResultMap.put(deleteResult, deletionResultMap.getOrDefault(deleteResult, 0)
+                                + 1);
 
                         // Display a message if verbose option is present
                         if (commandLine.hasOption(DemolisherOptions.OPTION_VERBOSE_SHORT)) {
-                            if (isDeleted) {
-                                System.out.println("File " + filePath.toFile().getAbsolutePath() + " deleted");
-                            } else {
-                                System.out.println("Could NOT delete " + filePath.toFile().getAbsolutePath());
-                            }
+                            displayDeletionMessage(deleteResult, filePath.toFile().getAbsolutePath());
                         }
 
                     });
 
-            // Display number of deleted files and errors
-            System.out.println("\n" + deletionResultMap.getOrDefault(true, 0) + " files deleted\n" +
-                    deletionResultMap.getOrDefault(false, 0) + " errors occurred");
+            displaySummary(deletionResultMap);
 
         } catch (IOException e) {
             showError("Could NOT get the list of files");
@@ -92,6 +89,34 @@ public class Demolisher {
 
     private void showError(String errorMessage) {
         System.err.println(DemolisherOptions.PROGRAM_NAME + ": " + errorMessage);
+    }
+
+    private void displayDeletionMessage(DeleteResult result, String path) {
+
+        switch (result) {
+            case DELETED:
+                System.out.println("File '" + path + "' deleted");
+                break;
+            case SKIPPED:
+                System.out.println("File '" + path + "' skipped");
+                break;
+            case ERROR:
+                System.out.println("Could NOT delete '" + path + "'");
+                break;
+        }
+
+    }
+
+    private void displaySummary(TreeMap<DeleteResult, Integer> deletionResultMap) {
+
+        System.out.println("\n"
+                + deletionResultMap.getOrDefault(DeleteResult.DELETED, 0) + " files deleted"
+                + "\n"
+                + deletionResultMap.getOrDefault(DeleteResult.SKIPPED, 0) + " files skipped"
+                + "\n"
+                + deletionResultMap.getOrDefault(DeleteResult.ERROR, 0) + " errors occurred"
+        );
+
     }
 
 }

@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author Masood Fallhpoor
@@ -15,6 +16,8 @@ import java.util.List;
 public class FileUtils {
 
     public enum Result {DIR_DOES_NOT_EXIST, NOT_A_DIRECTORY, OK}
+
+    public enum DeleteResult {SKIPPED, DELETED, ERROR}
 
     public static boolean isFileNameInGivenFileNames(Path filePath, List<String> givenFileNames) {
 
@@ -64,14 +67,33 @@ public class FileUtils {
     }
 
 
-    public static boolean deleteFile(Path filePath) {
+    public static DeleteResult deleteFile(Path filePath, boolean prompt) {
 
-        try {
-            return Files.deleteIfExists(filePath);
-        } catch (IOException e) {
-            return false;
+        if (prompt) {
+
+            System.out.print("Delete file '" + filePath.toFile().getAbsolutePath() + "'?(y/n) ");
+
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+
+            if (input.length() == 1 && input.equalsIgnoreCase("y")) {
+                return deleteFile(filePath);
+            } else {
+                return DeleteResult.SKIPPED;
+            }
+
+        } else {
+            return deleteFile(filePath);
         }
 
+    }
+
+    private static DeleteResult deleteFile(Path filePath) {
+        try {
+            return (Files.deleteIfExists(filePath) ? DeleteResult.DELETED : DeleteResult.ERROR);
+        } catch (IOException e) {
+            return DeleteResult.ERROR;
+        }
     }
 
 }

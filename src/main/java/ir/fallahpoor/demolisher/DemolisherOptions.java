@@ -18,6 +18,8 @@ public class DemolisherOptions {
             "This is free software: you are free to change and redistribute it.\n" +
             "There is NO WARRANTY, to the extent permitted by law.\n\n" +
             "Written by Masood Fallahpoor.\n";
+    public static final String OPTION_INTERACTIVE_SHORT = "i";
+    public static final String OPTION_INTERACTIVE_LONG = "interactive";
     public static final String OPTION_VERBOSE_SHORT = "v";
     public static final String OPTION_VERBOSE_LONG = "verbose";
     public static final String OPTION_VERSION = "version";
@@ -27,6 +29,11 @@ public class DemolisherOptions {
     public static Options getOptions() {
 
         Options options = new Options();
+
+        // Add an option for being more verbose
+        Option interactiveOption = new Option(OPTION_INTERACTIVE_SHORT, OPTION_INTERACTIVE_LONG, false,
+                "prompt before each deletion.");
+        options.addOption(interactiveOption);
 
         // Add an option for being more verbose
         Option verboseOption = new Option(OPTION_VERBOSE_SHORT, OPTION_VERBOSE_LONG, false,
