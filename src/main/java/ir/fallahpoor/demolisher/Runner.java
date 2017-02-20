@@ -21,6 +21,7 @@ public class Runner {
         Options options = DemolisherOptions.getOptions();
         HelpFormatter formatter = new HelpFormatter();
 
+        formatter.setWidth(100);
         // Format options in the order they're added to options object
         formatter.setOptionComparator(null);
 
@@ -37,7 +38,10 @@ public class Runner {
             }
 
             if (commandLine.hasOption(DemolisherOptions.OPTION_HELP_SHORT)) {
-                formatter.printHelp(DemolisherOptions.USAGE_MESSAGE, options);
+                formatter.printHelp(DemolisherOptions.USAGE_MESSAGE, null, options, "\nExit status"
+                        + "\n 0 if everything is OK"
+                        + "\n 1 if any error occurs (e.g. unrecognized option, non-existing directory, "
+                        + "file deletion failure etc)");
                 System.exit(0);
             }
 

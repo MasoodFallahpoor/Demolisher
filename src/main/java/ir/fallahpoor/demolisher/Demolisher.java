@@ -60,6 +60,12 @@ public class Demolisher {
 
             displaySummary(deletionResultMap);
 
+            if (deletionResultMap.getOrDefault(DeleteResult.ERROR, 0) == 0) {
+                System.exit(0);
+            } else {
+                System.exit(1);
+            }
+
         } catch (IOException e) {
             showError("Could NOT get the list of files");
             System.exit(1);
