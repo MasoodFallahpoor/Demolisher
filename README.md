@@ -31,7 +31,7 @@ project
 ```
 In order to delete files with name either *a.txt* or *b.txt* one could use Demolisher as follows:
 ```
-java -jar demolisher FULL_PATH_OF_project_DIRECTORY a.txt b.txt
+java -jar demolisher.jar FULL_PATH_OF_project_DIRECTORY a.txt b.txt
 ```
 
 After executing the above command the structure of *project* directory will be:
@@ -57,15 +57,23 @@ Notes
 --------
 - The general form of running Demolisher is as follows:
 ```
-java -jar demolisher [OPTION]... DIRECTORY FILE-NAME...
+java -jar demolisher.jar [OPTION]... DIRECTORY FILE-NAME...
 ```
 - You need JDK/JRE 8 to run Demolisher.
 - The path to *java* command should be in your PATH environment variable or you should provide the full path of java command in order to run Demolisher.
 - If the path of directory or file names contain space then they should be surrounded with double quotes like: 
 ```
-java -jar demolisher "C:\Program Files\project" "file 1.txt" "file 2.txt"
+java -jar demolisher.jar "C:\Program Files\project" "file 1.txt" "file 2.txt"
 ```
 - File names could be entered with or without extension. When file name has extension then only files with that exact name and extension are deleted. When no extension is entered then all files with specified name are deleted regardless of their extension.
+- One can use *find* command in GNU/Linux shell to implement the functionality of Demolisher. For example consider the following invocation of Demolisher:
+```
+java -jar demolisher.jar /home/foo/dummyDir/ a.txt b.txt
+```
+The equivalent functionality is achieved with find command as follows:
+```
+find /home/foo/dummyDir -type f \( -name "a.txt" -o -name "b.txt" \)
+```
 
 License
 --------
