@@ -92,15 +92,15 @@ public class Demolisher {
 
     private boolean isDirectoryPathOk(String directoryPath) {
 
-        FileUtils.Result result = FileUtils.isDirectoryPathOk(directoryPath);
+        FileUtils.DirectoryCheckResult directoryCheckResult = FileUtils.isDirectoryPathOk(directoryPath);
 
-        if (result == FileUtils.Result.OK) {
+        if (directoryCheckResult == FileUtils.DirectoryCheckResult.OK) {
             return true;
         } else {
 
-            if (result == FileUtils.Result.DIR_DOES_NOT_EXIST) {
+            if (directoryCheckResult == FileUtils.DirectoryCheckResult.DIR_DOES_NOT_EXIST) {
                 showError("directory '" + directoryPath + "' does NOT exist");
-            } else if (result == FileUtils.Result.NOT_A_DIRECTORY) {
+            } else if (directoryCheckResult == FileUtils.DirectoryCheckResult.NOT_A_DIRECTORY) {
                 showError("A file is specified, NOT a directory");
             }
 

@@ -32,7 +32,7 @@ import java.util.Scanner;
  */
 public class FileUtils {
 
-    public enum Result {DIR_DOES_NOT_EXIST, NOT_A_DIRECTORY, OK}
+    public enum DirectoryCheckResult {DIR_DOES_NOT_EXIST, NOT_A_DIRECTORY, OK}
 
     public enum DeleteResult {SKIPPED, DELETED, ERROR}
 
@@ -80,19 +80,19 @@ public class FileUtils {
      * @param directoryPath path of directory to check
      * @return {@code true} if given path is a valid directory
      */
-    public static Result isDirectoryPathOk(String directoryPath) {
+    public static DirectoryCheckResult isDirectoryPathOk(String directoryPath) {
 
         File dirPath = new File(directoryPath);
 
         if (!dirPath.exists()) {
-            return Result.DIR_DOES_NOT_EXIST;
+            return DirectoryCheckResult.DIR_DOES_NOT_EXIST;
         }
 
         if (!dirPath.isDirectory()) {
-            return Result.NOT_A_DIRECTORY;
+            return DirectoryCheckResult.NOT_A_DIRECTORY;
         }
 
-        return Result.OK;
+        return DirectoryCheckResult.OK;
 
     }
 
