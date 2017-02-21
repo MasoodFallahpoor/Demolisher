@@ -36,6 +36,13 @@ public class FileUtils {
 
     public enum DeleteResult {SKIPPED, DELETED, ERROR}
 
+    /**
+     * Checks if the file name of file path is in given list of file names.
+     *
+     * @param filePath       the path of file to check its name
+     * @param givenFileNames list of file names
+     * @return {@code true} if file name is in the list of given file names
+     */
     public static boolean isFileNameInGivenFileNames(Path filePath, List<String> givenFileNames) {
 
         Iterator<String> iterator = givenFileNames.iterator();
@@ -67,6 +74,12 @@ public class FileUtils {
 
     }
 
+    /**
+     * Checks whether given directory path exists and is actually a directory (not a file).
+     *
+     * @param directoryPath path of directory to check
+     * @return {@code true} if given path is a valid directory
+     */
     public static Result isDirectoryPathOk(String directoryPath) {
 
         File dirPath = new File(directoryPath);
@@ -83,7 +96,13 @@ public class FileUtils {
 
     }
 
-
+    /**
+     * Deletes the specified file from file system.
+     *
+     * @param filePath path of file to delete
+     * @param prompt   if {@code true} displays a confirmation before deleting file
+     * @return {@code true} if file is successfully deleted, {@code false} otherwise
+     */
     public static DeleteResult deleteFile(Path filePath, boolean prompt) {
 
         if (prompt) {
