@@ -49,8 +49,26 @@ public class Demolisher {
             System.exit(1);
         }
 
+        int depth = Integer.MAX_VALUE;
+
+        if (commandLine.hasOption(DemolisherOptions.OPTION_DEPTH_SHORT)) {
+
+            String depthOptionValue = commandLine.getOptionValue(DemolisherOptions.OPTION_DEPTH_SHORT);
+
+            try {
+                depth = Integer.valueOf(depthOptionValue);
+            } catch (NumberFormatException ex) {
+                showError("invalid argument '" + depthOptionValue + "' for "
+                        + DemolisherOptions.OPTION_DEPTH_LONG
+                        + "\n"
+                        + "depth must be an integer in range [0," + Integer.MAX_VALUE + "]");
+                System.exit(1);
+            }
+
+        }
+
         // Traverse the file tree rooted at directoryPath and get all paths
-        try (Stream<Path> paths = Files.walk(Paths.get(directoryPath))) {
+        try (Stream<Path> paths = Files.walk(Paths.get(directoryPath), depth)) {
 
             TreeMap<DeleteResult, Integer> deletionResultMap = new TreeMap<>();
 
@@ -83,6 +101,10 @@ public class Demolisher {
                 System.exit(1);
             }
 
+        } catch (IllegalArgumentException e) {
+            showError("invalid argument '" + depth + "' for " + DemolisherOptions.OPTION_DEPTH_LONG +
+                    "\ndepth must be an integer in range [0," + Integer.MAX_VALUE + "]");
+            System.exit(1);
         } catch (IOException e) {
             showError("Could NOT get the list of files");
             System.exit(1);
