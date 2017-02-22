@@ -27,7 +27,7 @@ public class DemolisherOptions {
 
     public static final int NUM_MANDATORY_ARGUMENTS = 2;
     public static final String PROGRAM_NAME = "demolisher";
-    private static final String PROGRAM_VERSION = "0.4";
+    private static final String PROGRAM_VERSION = "0.5";
     public static final String USAGE_MESSAGE = PROGRAM_NAME + " [OPTION]... DIRECTORY FILE-NAME...";
     public static final String VERSION_MESSAGE = PROGRAM_NAME + " version " + PROGRAM_VERSION + "\n" +
             "Copyright (C) 2017 Masood Fallahpoor.\n" +
