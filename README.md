@@ -1,4 +1,4 @@
-Demolisher
+Demolisher [![Build Status](https://travis-ci.org/MasoodFallahpoor/Demolisher.svg?branch=master)](https://travis-ci.org/MasoodFallahpoor/Demolisher)
 =========
 Demolisher is a tiny command-line Java program that receives a directory and a list of file names and recursively deletes files with given file names from given directory and all its subdirectories.
 
