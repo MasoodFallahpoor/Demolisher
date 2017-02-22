@@ -64,7 +64,7 @@ public class Runner {
 
         } catch (ParseException e) {
             if (e instanceof UnrecognizedOptionException) {
-                System.out.println(DemolisherOptions.PROGRAM_NAME + ": unrecognized option\n" +
+                System.err.println(DemolisherOptions.PROGRAM_NAME + ": unrecognized option\n" +
                         "Try '" + DemolisherOptions.PROGRAM_NAME + " --" + DemolisherOptions.OPTION_HELP_LONG +
                         "' for more information.");
             } else {
