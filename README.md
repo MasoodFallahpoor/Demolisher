@@ -72,7 +72,7 @@ java -jar demolisher.jar /home/foo/dummyDir/ a.txt b.txt
 ```
 The equivalent functionality is achieved with find command as follows:
 ```
-find /home/foo/dummyDir -type f \( -name "a.txt" -o -name "b.txt" \)
+find /home/foo/dummyDir -type f \( -name "a.txt" -o -name "b.txt" \) -exec rm -f {} \;
 ```
 
 License
